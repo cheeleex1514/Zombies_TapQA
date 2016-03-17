@@ -3,11 +3,11 @@ WELCOME TO:
 	 ________  ________  _____ ______   ________  ___  _______   ________
 	|\_____  \|\   __  \|\   _ \  _   \|\   __  \|\  \|\  ___ \ |\   ____\
 	 \|___/  /\ \  \|\  \ \  \\\__\ \  \ \  \|\ /\ \  \ \   __/|\ \  \___|_
-       /  / /\ \  \\\  \ \  \\|__| \  \ \   __  \ \  \ \  \_|/_\ \_____  \
-      /  /_/__\ \  \\\  \ \  \    \ \  \ \  \|\  \ \  \ \  \_|\ \|____|\  \
+       	     /  / /\ \  \\\  \ \  \\|__| \  \ \   __  \ \  \ \  \_|/_\ \_____  \
+            /  /_/__\ \  \\\  \ \  \    \ \  \ \  \|\  \ \  \ \  \_|\ \|____|\  \
 	   |\________\ \_______\ \__\    \ \__\ \_______\ \__\ \_______\____\_\  \
 	    \|_______|\|_______|\|__|     \|__|\|_______|\|__|\|_______|\_________\
-                                                                  \|_________|
+                                                                        \|_________|
 ==========================================================================================
 
 Humanity is on the brink of extinction. All hope is lost for humanity! Fortunately a group of consultants have barricaded themselves at TapQA headquarters and have developed an algorithm to save the world. This group of consultants won't be able to save humanity by themselves. They require the assistance of humanity's last combined army. Unfortunately it will take 15 days for this army to arrive to extract the consultants. Until extraction at least one consultant must survive the zombies that only attack during the night as well as not run out of supplies.
@@ -77,3 +77,16 @@ NOTES
 ==========================================================================================
 Requirements are subject to change.
 
+==========================================================================================
+Running Requirements
+==========================================================================================
+Requirements:
+  -JRE 6+ (In order to run the program)
+  -JDK 6+ (To develop java programs)
+  ** http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+  
+Compiling:
+  -Open terminal or cmd line
+  -Change directories to folder containing the project
+  -Compile the driver class (i.e. javac main.java)
+  -Run the program
