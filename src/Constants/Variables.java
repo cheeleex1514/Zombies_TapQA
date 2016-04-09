@@ -1,3 +1,6 @@
+/**
+ * Static class for variables
+ */
 package Constants;
 
 import java.util.ArrayList;
@@ -50,6 +53,11 @@ public final class Variables {
 	
 	public static final String SURVIVING_NIGHT = "YAY! The consultants have survived to live another day!";
 
+	
+	/**
+	 * Constructor static class constructor
+	 * @throws AssertionError Class should not be instantiable
+	 */
 	public Variables()
 	{
 		throw new AssertionError(); //cannot be instantiated

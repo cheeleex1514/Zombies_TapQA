@@ -1,3 +1,6 @@
+/**
+ * Class for the game states
+ */
 package Control;
 
 import java.util.ArrayList;
@@ -6,7 +9,6 @@ import java.util.Scanner;
 
 import Entities.Character;
 import Entities.Weapons;
-
 public class GameState {
 
 	private Weapons consultantWeapon;
@@ -18,6 +20,9 @@ public class GameState {
 	private boolean lossCondition;
 	private int explorationCount;
 	
+	/**
+	 * Constructor
+	 */
 	public GameState()
 	{
 		this.rationsCount = Constants.Variables.INITIAL_RATIONS;
@@ -27,11 +32,21 @@ public class GameState {
 		this.scanner = new Scanner(System.in);
 	}
 	
+	/**
+	 * Loads ArrayList for consultant characters
+	 * @return
+	 */
 	private ArrayList<Character> loadConsultants()
 	{
 		return (ArrayList<Character>) Constants.Variables.CONSULTANT_NAMES;
 	}
 	
+	/**
+	 * Method for controlling flow of game states 
+	 * 
+	 * @param consultants 
+	 * @throws InterruptedException 
+	 */
 	public void gameInstance(ArrayList<Character> consultants) throws InterruptedException
 	{
 		consultants = loadConsultants();
@@ -103,7 +118,19 @@ public class GameState {
 		return tempWeapon;
 	}
 	
-	private void daySequence(ArrayList<Character> consultants, Scanner scan) throws InterruptedException
+	/**
+	 * Method for day sequence. 
+	 * Options -
+	 * [1] Check living characters
+	 * [2] Check remaining supplies
+	 * [3] Explore for supplies
+	 * [4] Prepare for nightfall
+	 * 
+	 * @param consultants Consultants array
+	 * @param scan	Scanner for user input **this parameter under review
+	 * @throws InterruptedException **dependant on scanner parameter
+	 */
+	private void daySequence(ArrayList<Character> consultantsArray, Scanner scan) throws InterruptedException
 	{
 		boolean playerContinues = false;
 		int usrInput = 0;
@@ -127,7 +154,7 @@ public class GameState {
 			switch(usrInput)
 			{
 				case 1:
-					System.out.println("Remaining consultants: " + consultants.size() +
+					System.out.println("Remaining consultants: " + consultantsArray.size() +
 							"\n-----------------------------------------------------");
 					break;
 				case 2:
@@ -177,7 +204,7 @@ public class GameState {
 						if(exploreChoice == 'y' || exploreChoice == 'Y')
 						{
 							this.rationsCount = this.rationsCount - Constants.Variables.EXPLORE_REQUIREMENTS;
-							exploreSequence(consultants);
+							exploreSequence(consultantsArray);
 						}
 						else
 						{
@@ -190,7 +217,7 @@ public class GameState {
 						if(exploreChoice == 'y' || exploreChoice == 'Y')
 						{
 							this.rationsCount = this.rationsCount - Constants.Variables.EXPLORE_REQUIREMENTS;
-							exploreSequence(consultants);
+							exploreSequence(consultantsArray);
 						}
 						else
 						{
@@ -221,13 +248,13 @@ public class GameState {
 				case 4:
 					if(consultantWeapon.getName().equals(Constants.Variables.WEAPON_TYPE_ONE))
 					{
-						this.rationsCount = this.rationsCount - (consultants.size()*2);
-						System.out.println((consultants.size()*2) + " rations consumed.");
+						this.rationsCount = this.rationsCount - (consultantsArray.size()*2);
+						System.out.println((consultantsArray.size()*2) + " rations consumed.");
 					}
 					else
 					{
-						this.rationsCount = this.rationsCount - consultants.size();
-						System.out.println(consultants.size() + " rations consumed.");
+						this.rationsCount = this.rationsCount - consultantsArray.size();
+						System.out.println(consultantsArray.size() + " rations consumed.");
 					}
 					
 					System.out.println("Awaiting night fall..." +
@@ -243,11 +270,20 @@ public class GameState {
 		while(playerContinues != true);
 	}
 	
-	private boolean battleSequence(ArrayList<Character> list, Weapons weaponType, Random  rand, int spawns)
+	/**
+	 * Battle sequence. 
+	 * 
+	 * @param list 
+	 * @param weaponType
+	 * @param rand
+	 * @param spawns
+	 * @return
+	 */
+	private boolean battleSequence(ArrayList<Character> consultantsArray, Weapons weaponType, Random  rand, int spawns)
 	{		
 		System.out.println(spawns + " zombies approaching! Goodluck!");
 
-		while(list.size() > 0 && spawns > 0){
+		while(consultantsArray.size() > 0 && spawns > 0){
 			
 			int consultantHitChance = rand.nextInt(9);
 			boolean consultantMiss = false;
@@ -270,7 +306,7 @@ public class GameState {
 							   weaponType.getName().equals(Constants.Variables.WEAPON_TYPE_TWO) ||
 							   weaponType.getName().equals(Constants.Variables.WEAPON_TYPE_THREE)) && this.ammoCount > 0)
 					{
-						System.out.println(list.get(0).getName() + " successfully killed a zombie!");
+						System.out.println(consultantsArray.get(0).getName() + " successfully killed a zombie!");
 						spawns --;
 						
 						if(weaponType.getName().equals(Constants.Variables.WEAPON_TYPE_TWO))
@@ -289,7 +325,7 @@ public class GameState {
 				case 7:
 					if(weaponType.getName().equals(Constants.Variables.WEAPON_TYPE_THREE) && this.ammoCount > 0)
 					{
-						System.out.println(list.get(0).getName() + " successfully killed a zombie!");
+						System.out.println(consultantsArray.get(0).getName() + " successfully killed a zombie!");
 						spawns --;
 						this.ammoCount = Math.max(0, this.ammoCount - 2);
 						
@@ -298,34 +334,34 @@ public class GameState {
 				case 8:
 					if(weaponType.getName().equals(Constants.Variables.WEAPON_TYPE_ONE))
 					{
-						System.out.println(list.get(0).getName() + " successfully killed a zombie!");
+						System.out.println(consultantsArray.get(0).getName() + " successfully killed a zombie!");
 						spawns --;
 						break;
 					}
 				default:
 					if(this.ammoCount <= 0)
 					{
-						System.out.println(list.get(0).getName()+ " is panicking!");
+						System.out.println(consultantsArray.get(0).getName()+ " is panicking!");
 						consultantMiss = true;
 						break;
 					}
 					else
 					{
-						System.out.println(list.get(0).getName()+" attacks and misses!");
+						System.out.println(consultantsArray.get(0).getName()+" attacks and misses!");
 						consultantMiss = true;
 						break;
 					}
 			}
 			
-			if(consultantMiss == true && list.size() != 0)
+			if(consultantMiss == true && consultantsArray.size() != 0)
 			{
 				int zombieHitChance = rand.nextInt(19);
 				if(this.ammoCount == 0){zombieHitChance = 0;}
 				
 				if(zombieHitChance == 0)
 				{
-					System.out.println("Zombie successfully kills "+list.get(0).getName());
-					list.remove(0);
+					System.out.println("Zombie successfully kills "+consultantsArray.get(0).getName());
+					consultantsArray.remove(0);
 				}
 				else
 				{
@@ -335,11 +371,11 @@ public class GameState {
 			
 			consultantMiss = false;
 			System.out.println("Remaining zombies: " + spawns +
-					" Remaining consultants: " + list.size() +
+					" Remaining consultants: " + consultantsArray.size() +
 					"\n-----------------------------------------------------");
 			}
 		
-		if(list.size() > 0 || spawns == 0)
+		if(consultantsArray.size() > 0 || spawns == 0)
 		{
 			System.out.println(Constants.Variables.SURVIVING_NIGHT);
 			return false;
